@@ -22,9 +22,13 @@ function inventory.isJunk(itemName)
   return JUNK_BLOCKS[itemName] == true
 end
 
+-- Full means "no completely empty slot left". Waiting for every slot to have
+-- zero *space* is too lenient with mixed loot: one partially-filled stack
+-- keeps that false forever while newly mined blocks that fit nowhere are
+-- simply lost.
 function inventory.isFull()
   for slot = 1, 16 do
-    if turtle.getItemSpace(slot) > 0 then
+    if turtle.getItemCount(slot) == 0 then
       return false
     end
   end
@@ -52,14 +56,21 @@ function inventory.selectSealingItem()
   return false
 end
 
+-- Returns true if at least one slot was actually dropped, false if there was
+-- nothing to drop (or nothing could be dropped), so callers can tell an
+-- offload trip that achieved nothing from a successful one.
 function inventory.dumpToChest()
+  local dropped = false
   for slot = 1, 16 do
     if turtle.getItemCount(slot) > 0 then
       turtle.select(slot)
-      turtle.drop()
+      if turtle.drop() then
+        dropped = true
+      end
     end
   end
   turtle.select(1)
+  return dropped
 end
 
 return inventory

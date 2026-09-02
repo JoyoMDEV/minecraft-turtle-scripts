@@ -10,15 +10,29 @@ assert(inventory.isJunk("minecraft:gravel") == true)
 assert(inventory.isJunk("minecraft:diamond_ore") == false)
 assert(inventory.isJunk("minecraft:cobblestone") == false)
 
--- isFull(): true only when every slot is completely full.
-_G.turtle = newMockTurtle({getItemSpace = function() return 0 end})
+-- isFull(): true as soon as no slot is completely empty, even if some of the
+-- occupied slots still have room in their stack.
+_G.turtle = newMockTurtle({getItemCount = function() return 64 end})
 inventory = dofile("/lib/inventory.lua")
 assert(inventory.isFull() == true)
 
 _G.turtle = newMockTurtle({
+  getItemCount = function(slot)
+    if slot == 5 then return 1 end
+    return 64
+  end,
   getItemSpace = function(slot)
-    if slot == 5 then return 10 end
+    if slot == 5 then return 63 end
     return 0
+  end,
+})
+inventory = dofile("/lib/inventory.lua")
+assert(inventory.isFull() == true, "a partially-filled stack must not keep isFull() false")
+
+_G.turtle = newMockTurtle({
+  getItemCount = function(slot)
+    if slot == 5 then return 0 end
+    return 64
   end,
 })
 inventory = dofile("/lib/inventory.lua")
@@ -68,11 +82,24 @@ _G.turtle = newMockTurtle({
   drop = function() calls[#calls + 1] = {"drop"} return true end,
 })
 inventory = dofile("/lib/inventory.lua")
-inventory.dumpToChest()
+assert(inventory.dumpToChest() == true)
 assert(calls[1][1] == "select" and calls[1][2] == 2)
 assert(calls[2][1] == "drop")
 assert(calls[3][1] == "select" and calls[3][2] == 9)
 assert(calls[4][1] == "drop")
 assert(calls[5][1] == "select" and calls[5][2] == 1)
+
+-- dumpToChest(): reports false when there was nothing to drop.
+_G.turtle = newMockTurtle({getItemCount = function() return 0 end})
+inventory = dofile("/lib/inventory.lua")
+assert(inventory.dumpToChest() == false)
+
+-- dumpToChest(): reports false when the drops themselves fail (full chest).
+_G.turtle = newMockTurtle({
+  getItemCount = function() return 64 end,
+  drop = function() return false end,
+})
+inventory = dofile("/lib/inventory.lua")
+assert(inventory.dumpToChest() == false)
 
 print("OK")
