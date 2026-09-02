@@ -1,0 +1,5 @@
+.DS_Store
+
+# CraftOS-PC local emulator state (per-machine, not shared)
+.craftos/
+computer/
