@@ -37,3 +37,12 @@ run as a logic/syntax check, not a guarantee it behaves identically in-game.
   machine) — match the style of surrounding code in a file/folder rather
   than imposing a new convention.
 - Prefer small, focused scripts per role over one large configurable script.
+
+## Documentation language
+
+User-facing tutorials and usage instructions (README.md, in-game/setup
+walkthroughs) must be written in **both German and English** — some of
+the people running these scripts have no programming background and are
+more comfortable in German. Internal/technical docs (this file, design
+specs under `docs/`) stay English-only; they're for coding-agent and
+developer context, not end users.
