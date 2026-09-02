@@ -9,12 +9,16 @@ copied/pulled onto in-game turtles.
 Scripts are organized by turtle role, one top-level folder per role:
 `mining/`, `farming/`, `tree-farm/`, `building/`, `item-sorter/`. Shared
 helper code (movement/navigation, inventory management, fuel handling, etc.)
-goes in `lib/` and is pulled in with `require`, not copy-pasted between
-scripts.
+goes in `lib/` and is pulled in with an absolute-path
+`dofile("/lib/<name>.lua")`, not `require` and not copy-pasted between
+scripts. `require` resolves relative to the calling script's own folder, so
+it breaks as soon as a script in `mining/` loads a module from `lib/`;
+absolute `dofile` paths resolve identically in this repo, in CraftOS-PC
+(with computer-0 pointed at the repo root), and on an installed turtle.
 
 Each script must stay runnable by itself once copied onto a turtle's own
-filesystem — don't assume a repo-relative path at runtime, only `require`
-of modules that will also be present on the turtle (i.e. `lib/`).
+filesystem — don't assume a repo-relative path at runtime, only
+`dofile("/lib/...")` of modules that will also be present on the turtle.
 
 ## Environment
 

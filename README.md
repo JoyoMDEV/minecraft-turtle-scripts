@@ -9,11 +9,14 @@ Lua scripts for CC: Tweaked turtles and computers, organized by turtle role.
 - `tree-farm/` — tree farming/lumberjack scripts
 - `building/` — construction/schematic-placing scripts
 - `item-sorter/` — computer + turtle scripts for sorting storage systems
-- `lib/` — shared helper modules required by scripts in the folders above
+- `lib/` — shared helper modules loaded by scripts in the folders above
 
 Each script folder is meant to be pushed/pulled to an in-game turtle as-is
 (e.g. via a disk drive, `wget`, or a Pastebin/GitHub pull script), so keep
-scripts self-contained aside from `require`-ing modules from `lib/`.
+scripts self-contained aside from loading modules from `lib/` with an
+absolute path: `dofile("/lib/<name>.lua")`. (`require` resolves relative to
+the calling script's own folder, which breaks for a script in `mining/`
+loading a module from `lib/`, so it isn't used here.)
 
 ## Testing locally with CraftOS-PC
 
@@ -22,9 +25,12 @@ that runs the real `turtle`, `fs`, `peripheral`, etc. APIs outside of
 Minecraft, so most scripts can be smoke-tested without loading the game.
 
 1. Install it: `brew install --cask craftos-pc`
-2. Launch CraftOS-PC and use its mounter (Settings → Mounter, or drag a
-   folder onto the window) to mount this repo's folder as a drive inside the
-   emulator — this avoids copying files back and forth.
+2. Point CraftOS-PC's computer-0 data folder directly at this repo's root, so
+   the repo *is* the emulated computer's filesystem root. Scripts load shared
+   modules by absolute path (`dofile("/lib/inventory.lua")`), so they only
+   resolve if `lib/` sits at the emulated root — mounting the repo as a
+   secondary drive instead makes those loads fail with
+   `cannot open /lib/inventory.lua`.
 3. Run a script from the CraftOS-PC shell, e.g.:
    ```
    cd mining
@@ -65,6 +71,13 @@ a final pass in-game before relying on a script.
    sich an den beiden Truhen und macht danach automatisch weiter. Startet
    der Server neu oder die Turtle geht aus, reicht ein erneutes `quarry`
    ohne Argumente — sie merkt sich, wo sie war.
+5. **Neu anfangen statt fortsetzen.** Solange die Fortschrittsdatei
+   `/quarry_state.txt` auf der Turtle liegt, setzt `quarry` immer den alten
+   Lauf fort und ignoriert neu angegebene Argumente. Wenn du einen neuen
+   Steinbruch (oder andere Maße) starten willst — z. B. weil die Turtle auf
+   Grundgestein gestoßen und stehen geblieben ist — lösche die Datei mit
+   `delete /quarry_state.txt` und starte `quarry` danach wieder mit
+   Argumenten.
 
 ### English
 
@@ -91,3 +104,9 @@ a final pass in-game before relying on a script.
    chests, then keeps going automatically. If the server restarts or the
    turtle loses power, just run `quarry` again with no arguments — it
    remembers where it left off.
+5. **Starting over instead of resuming.** As long as the progress file
+   `/quarry_state.txt` exists on the turtle, `quarry` always resumes the old
+   run and ignores any freshly passed arguments. To start a new quarry (or
+   use different dimensions) — for instance because the turtle hit bedrock
+   and stopped — delete the file with `delete /quarry_state.txt`, then run
+   `quarry` with arguments again.
