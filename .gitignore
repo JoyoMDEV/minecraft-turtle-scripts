@@ -3,3 +3,6 @@
 # CraftOS-PC local emulator state (per-machine, not shared)
 .craftos/
 computer/
+
+# Quarry runtime state file
+quarry_state.txt
