@@ -23,6 +23,11 @@ local function newMockTurtle(script)
         return handler(...)
       end
       if handler == nil then
+        -- detect* and inspect* methods should return false (no block) when undefined
+        if name == "detect" or name == "detectUp" or name == "detectDown" or
+           name == "inspect" or name == "inspectUp" or name == "inspectDown" then
+          return false
+        end
         return true
       end
       return handler
