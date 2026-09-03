@@ -72,7 +72,7 @@ once to pull down a script and everything it depends on, via CC:Tweaked's
 built-in `wget`:
 
 ```
-wget run https://raw.githubusercontent.com/YOUR_GITHUB_USER/minecraft-turtle-scripts/main/install.lua quarry
+wget run https://raw.githubusercontent.com/YOUR_GITHUB_USER/minecraft-turtle-scripts/master/install.lua quarry
 ```
 
 `YOUR_GITHUB_USER` is a placeholder until this repo is pushed to GitHub and

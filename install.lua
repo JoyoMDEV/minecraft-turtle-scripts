@@ -1,4 +1,4 @@
-local REPO_RAW_BASE = "https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/main"
+local REPO_RAW_BASE = "https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/master"
 
 -- Each entry lists the lib/ modules a given role's scripts need, since not
 -- every role uses all of them (e.g. lumberjack has no resume state to load).

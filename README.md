@@ -55,7 +55,7 @@ a final pass in-game before relying on a script.
    an deine Position (mit derselben Blickrichtung) und gib in ihrem
    Terminal ein:
    ```
-   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/main/install.lua mining/quarry
+   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/master/install.lua mining/quarry
    ```
    Das lädt das Skript und alles, was es braucht, einmalig herunter.
 3. **Steinbruch starten.** Gib ein:
@@ -89,7 +89,7 @@ a final pass in-game before relying on a script.
 2. **Place the turtle and install the script.** Put the turtle exactly at
    your position (facing the same way), and in its terminal type:
    ```
-   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/main/install.lua mining/quarry
+   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/master/install.lua mining/quarry
    ```
    That downloads the script and everything it needs, once.
 3. **Start the quarry.** Type:
@@ -126,7 +126,7 @@ a final pass in-game before relying on a script.
    Knochenmehl und Treibstoff in die Truhe und gib im Terminal der Turtle
    ein:
    ```
-   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/main/install.lua tree-farm/lumberjack
+   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/master/install.lua tree-farm/lumberjack
    ```
 3. **Lumberjack starten.** Gib ein:
    ```
@@ -155,7 +155,7 @@ a final pass in-game before relying on a script.
    your position (facing the same way), stock the chest with saplings,
    bone meal, and fuel, and in its terminal type:
    ```
-   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/main/install.lua tree-farm/lumberjack
+   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/master/install.lua tree-farm/lumberjack
    ```
 3. **Start the lumberjack.** Type:
    ```

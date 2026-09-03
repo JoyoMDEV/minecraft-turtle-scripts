@@ -1203,7 +1203,7 @@ Expected: an error such as `cannot open /install.lua`.
 - [ ] **Step 3: Implement `install.lua`**
 
 ```lua
-local REPO_RAW_BASE = "https://raw.githubusercontent.com/YOUR_GITHUB_USER/minecraft-turtle-scripts/main"
+local REPO_RAW_BASE = "https://raw.githubusercontent.com/YOUR_GITHUB_USER/minecraft-turtle-scripts/master"
 
 local LIB_FILES = {"nav.lua", "fuel.lua", "inventory.lua", "state.lua"}
 
@@ -1293,7 +1293,7 @@ Insert a new section into `README.md`, after the existing "Testing locally with 
    an deine Position (mit derselben Blickrichtung) und gib in ihrem
    Terminal ein:
    ```
-   wget run https://raw.githubusercontent.com/YOUR_GITHUB_USER/minecraft-turtle-scripts/main/install.lua quarry
+   wget run https://raw.githubusercontent.com/YOUR_GITHUB_USER/minecraft-turtle-scripts/master/install.lua quarry
    ```
    Das lädt das Skript und alles, was es braucht, einmalig herunter.
 3. **Steinbruch starten.** Gib ein:
@@ -1320,7 +1320,7 @@ Insert a new section into `README.md`, after the existing "Testing locally with 
 2. **Place the turtle and install the script.** Put the turtle exactly at
    your position (facing the same way), and in its terminal type:
    ```
-   wget run https://raw.githubusercontent.com/YOUR_GITHUB_USER/minecraft-turtle-scripts/main/install.lua quarry
+   wget run https://raw.githubusercontent.com/YOUR_GITHUB_USER/minecraft-turtle-scripts/master/install.lua quarry
    ```
    That downloads the script and everything it needs, once.
 3. **Start the quarry.** Type:
