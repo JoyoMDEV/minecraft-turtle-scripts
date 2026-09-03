@@ -55,7 +55,7 @@ a final pass in-game before relying on a script.
    an deine Position (mit derselben Blickrichtung) und gib in ihrem
    Terminal ein:
    ```
-   wget run https://raw.githubusercontent.com/YOUR_GITHUB_USER/minecraft-turtle-scripts/main/install.lua quarry
+   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/main/install.lua mining/quarry
    ```
    Das lädt das Skript und alles, was es braucht, einmalig herunter.
 3. **Steinbruch starten.** Gib ein:
@@ -89,7 +89,7 @@ a final pass in-game before relying on a script.
 2. **Place the turtle and install the script.** Put the turtle exactly at
    your position (facing the same way), and in its terminal type:
    ```
-   wget run https://raw.githubusercontent.com/YOUR_GITHUB_USER/minecraft-turtle-scripts/main/install.lua quarry
+   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/main/install.lua mining/quarry
    ```
    That downloads the script and everything it needs, once.
 3. **Start the quarry.** Type:
@@ -110,3 +110,63 @@ a final pass in-game before relying on a script.
    use different dimensions) — for instance because the turtle hit bedrock
    and stopped — delete the file with `delete /quarry_state.txt`, then run
    `quarry` with arguments again.
+
+## Running the lumberjack script (Deutsch / English)
+
+### Deutsch
+
+1. **Setzling pflanzen und Truhe aufstellen.** Pflanze einen Setzling
+   (Eiche, Birke, Fichte oder Dschungelbaum — die schmale Variante) auf die
+   Stelle, die die Turtle bepflanzen soll. Stelle dich direkt davor, mit
+   Blick auf den Setzling, und stelle direkt **hinter** dir eine Truhe auf.
+   Diese eine Truhe dient sowohl als Vorrat (Setzlinge, Knochenmehl,
+   Treibstoff) als auch als Ablage für das geerntete Holz.
+2. **Turtle aufstellen und Skript installieren.** Stelle die Turtle genau
+   an deine Position (mit derselben Blickrichtung), lege Setzlinge,
+   Knochenmehl und Treibstoff in die Truhe und gib im Terminal der Turtle
+   ein:
+   ```
+   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/main/install.lua tree-farm/lumberjack
+   ```
+3. **Lumberjack starten.** Gib ein:
+   ```
+   lumberjack
+   ```
+   Die Turtle wartet, bis der Setzling zu einem Baum herangewachsen ist
+   (und düngt ihn zwischendurch mit Knochenmehl, falls vorhanden), fällt
+   dann den Stamm komplett ab, pflanzt sofort einen neuen Setzling und
+   fängt wieder von vorne an. Ist das Inventar voll, der Treibstoff knapp
+   oder kein Setzling mehr übrig, fährt sie zur Truhe, leert sich, holt
+   Nachschub und macht weiter.
+4. **Neu starten nach einem Absturz.** Der Lumberjack merkt sich nichts auf
+   der Festplatte — er schaut sich bei jedem Start einfach an, was gerade
+   vor ihm liegt (Erde, Setzling oder Baum). Nach einem Serverneustart oder
+   Stromausfall reicht es also, `lumberjack` einfach erneut zu starten.
+
+### English
+
+1. **Plant a sapling and place a chest.** Plant a sapling (oak, birch,
+   spruce, or the thin jungle variant) on the spot the turtle should farm.
+   Stand directly in front of it, facing the sapling, and place a chest
+   directly **behind** you. This single chest doubles as the supply
+   source (saplings, bone meal, fuel) and the drop-off point for the
+   harvested logs.
+2. **Place the turtle and install the script.** Put the turtle exactly at
+   your position (facing the same way), stock the chest with saplings,
+   bone meal, and fuel, and in its terminal type:
+   ```
+   wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/main/install.lua tree-farm/lumberjack
+   ```
+3. **Start the lumberjack.** Type:
+   ```
+   lumberjack
+   ```
+   The turtle waits for the sapling to grow into a tree (fertilizing it
+   with bone meal along the way, if it's carrying any), chops the whole
+   trunk down, immediately replants a sapling, and starts over. When the
+   inventory is full, fuel runs low, or it's out of saplings, it visits
+   the chest, empties itself, restocks, and continues.
+4. **Recovering after a crash.** The lumberjack keeps no state on disk —
+   on every start it just looks at what's directly in front of it (dirt,
+   a sapling, or a tree) and picks up from there. So after a server
+   restart or power loss, just run `lumberjack` again.
