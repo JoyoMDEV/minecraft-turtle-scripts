@@ -58,7 +58,18 @@ a final pass in-game before relying on a script.
    wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/master/install.lua mining/quarry
    ```
    Das lädt das Skript und alles, was es braucht, einmalig herunter.
-3. **Steinbruch starten.** Gib ein:
+3. **Turtle einmal manuell auftanken.** Lege etwas Treibstoff (z. B.
+   Kohle) in einen Inventarplatz der Turtle und tanke sie damit auf,
+   bevor du den Steinbruch startest:
+   ```
+   turtle.select(1)
+   turtle.refuel()
+   ```
+   (Slot-Nummer ggf. anpassen.) So hat sie von Anfang an Treibstoff im
+   Tank, statt sich schon beim allerersten Schritt auf die Truhe
+   verlassen zu müssen. Nur Treibstoff ins Inventar zu legen reicht
+   nicht — ohne `turtle.refuel()` bleibt er ungenutzt liegen.
+4. **Steinbruch starten.** Gib ein:
    ```
    quarry <Breite> <Länge> <Tiefe> <true|false>
    ```
@@ -66,12 +77,20 @@ a final pass in-game before relying on a script.
    und wirft dabei nutzlose Blöcke (Erde, Kies, Stein usw.) direkt weg,
    statt sie mitzuschleppen. Mit `false` statt `true` wird stattdessen
    alles behalten.
-4. **Fertig warten lassen.** Die Turtle kehrt von selbst zur Oberfläche
+5. **Fertig warten lassen.** Die Turtle kehrt von selbst zur Oberfläche
    zurück, wenn Treibstoff oder Platz im Inventar knapp werden, tankt/leert
    sich an den beiden Truhen und macht danach automatisch weiter. Startet
    der Server neu oder die Turtle geht aus, reicht ein erneutes `quarry`
    ohne Argumente — sie merkt sich, wo sie war.
-5. **Neu anfangen statt fortsetzen.** Solange die Fortschrittsdatei
+6. **Wenn die Meldung „Quarry stopped: hit an unbreakable block or got
+   stuck“ erscheint.** Das kann heißen, dass die Turtle wirklich auf einen
+   unzerstörbaren Block (z. B. Grundgestein) gestoßen ist — es kann aber
+   auch bedeuten, dass ihr mitten im Lauf der Treibstoff ausgegangen ist,
+   bevor sie die Truhe erreichen konnte (z. B. weil die Truhe leer war).
+   Tanke sie in diesem Fall genauso manuell nach wie in Schritt 3
+   beschrieben und rufe danach `quarry` ohne Argumente auf, um
+   fortzusetzen.
+7. **Neu anfangen statt fortsetzen.** Solange die Fortschrittsdatei
    `/quarry_state.txt` auf der Turtle liegt, setzt `quarry` immer den alten
    Lauf fort und ignoriert neu angegebene Argumente. Wenn du einen neuen
    Steinbruch (oder andere Maße) starten willst — z. B. weil die Turtle auf
@@ -92,19 +111,36 @@ a final pass in-game before relying on a script.
    wget run https://raw.githubusercontent.com/JoyoMDEV/minecraft-turtle-scripts/master/install.lua mining/quarry
    ```
    That downloads the script and everything it needs, once.
-3. **Start the quarry.** Type:
+3. **Refuel the turtle once, manually.** Put some fuel (e.g. coal) in one
+   of the turtle's inventory slots and refuel it before starting the
+   quarry:
+   ```
+   turtle.select(1)
+   turtle.refuel()
+   ```
+   (adjust the slot number as needed). That way it has fuel in the tank
+   from the very first move, instead of depending on the chest for its
+   very first refuel. Just placing fuel into the turtle's inventory isn't
+   enough on its own — without `turtle.refuel()`, it sits there unused.
+4. **Start the quarry.** Type:
    ```
    quarry <width> <length> <depth> <true|false>
    ```
    For example, `quarry 8 8 64 true` digs an 8×8 area 64 blocks deep,
    dropping useless blocks (dirt, gravel, stone, etc.) immediately instead
    of hauling them, rather than keeping everything if you pass `false`.
-4. **Let it run.** The turtle returns to the surface on its own whenever
+5. **Let it run.** The turtle returns to the surface on its own whenever
    fuel or inventory space runs low, refuels/empties itself at the two
    chests, then keeps going automatically. If the server restarts or the
    turtle loses power, just run `quarry` again with no arguments — it
    remembers where it left off.
-5. **Starting over instead of resuming.** As long as the progress file
+6. **If you see "Quarry stopped: hit an unbreakable block or got
+   stuck".** This can mean the turtle genuinely hit an unbreakable block
+   (like bedrock) — but it can also mean it ran out of fuel mid-run
+   before it could reach the chest (e.g. because the chest was empty).
+   Refuel it manually the same way as in step 3, then run `quarry` with
+   no arguments to resume.
+7. **Starting over instead of resuming.** As long as the progress file
    `/quarry_state.txt` exists on the turtle, `quarry` always resumes the old
    run and ignores any freshly passed arguments. To start a new quarry (or
    use different dimensions) — for instance because the turtle hit bedrock

@@ -93,6 +93,18 @@ local function resupply(returnPos, returnFacing)
   nav.rotateTo(returnFacing)
 end
 
+-- Digging is free, but moving isn't: a turtle can dig its way through an
+-- entire descent and still fail to actually step into the cleared space once
+-- it's out of fuel. This check only runs inside runSlice's own move loop, so
+-- every OTHER move the quarry makes - the initial descent, the descent
+-- between slices, and the re-home walk on resume - needs its own call to
+-- this before committing to movement that can't be undone if fuel runs out.
+local function ensureFuelAndSpace()
+  if not fuel.hasEnoughToReturn(nav.pos, turtle.getFuelLevel()) or inventory.isFull() then
+    resupply({x = nav.pos.x, y = nav.pos.y, z = nav.pos.z}, nav.facing)
+  end
+end
+
 -- Clear the block above and below the current position (the other two layers
 -- of the 3-tall slice), then void junk if the run was started with voidJunk.
 -- Returns false when a block above or below can't be broken (bedrock).
@@ -132,9 +144,7 @@ local function runSlice(width, length, args, sliceY)
       nav.turnLeft()
     end
 
-    if not fuel.hasEnoughToReturn(nav.pos, turtle.getFuelLevel()) or inventory.isFull() then
-      resupply({x = nav.pos.x, y = nav.pos.y, z = nav.pos.z}, nav.facing)
-    end
+    ensureFuelAndSpace()
   end
 
   saveProgress(sliceY, args)
@@ -156,6 +166,7 @@ local function run(...)
     -- can be the outward-facing corner where the last snake ended. Re-home
     -- before replaying the plan; re-walking an already-dug slice is cheap
     -- (it's all air) and keeps the dig inside the requested volume.
+    ensureFuelAndSpace()
     if not homeToSliceOrigin() then
       reportStuck()
       return
@@ -167,6 +178,7 @@ local function run(...)
     -- Descend 2, not 3: the first slice then sits at y=-2 and its
     -- digUp/digDown sweep covers y=-1/-2/-3, leaving no undug ceiling layer
     -- just below the surface.
+    ensureFuelAndSpace()
     for _ = 1, 2 do
       if not nav.down() then break end
     end
@@ -180,6 +192,7 @@ local function run(...)
     end
     sliceY = sliceY - 3
     if sliceY > -parsed.depth then
+      ensureFuelAndSpace()
       for _ = 1, 3 do
         if not nav.down() then
           reportStuck()
